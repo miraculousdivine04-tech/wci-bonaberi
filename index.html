@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winners Chapel Int'l Bonaberi</title>
+
+    <style>
+
+
+        /* =====================================================
+           COULEURS DU SITE
+        ===================================================== */
+
+        :root {
+            --rouge: #b30000;
+            --rouge-clair: #d41414;
+            --bordeaux: #5a0010;
+            --bordeaux-fonce: #320008;
+            --blanc: #ffffff;
+        }
+
+
+        /* =====================================================
+           CONFIGURATION GENERALE
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+
+            /* =================================================
+               FOND DE LA PAGE
+
+               POUR METTRE TON IMAGE :
+               remplace l'URL ci-dessous par ton image.
+
+               Exemple :
+               background-image:
+               url("images/fond-eglise.jpg");
+
+            ================================================= */
+
+            background-image:
+                linear-gradient(
+                    rgba(50, 0, 8, 0.78),
+                    rgba(90, 0, 16, 0.78)
+                ),
+                url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwUOtUpSG4jAymvzeJlxoYQmHYR9kPQsoEW6NLw7IC_Q&s=10");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: var(--blanc);
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           ELEMENT DECORATIF
+        ===================================================== */
+
+        .background-decoration {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background: rgba(179, 0, 0, 0.15);
+
+            filter: blur(10px);
+
+            z-index: 0;
+        }
+
+        .decoration-one {
+            top: -250px;
+            left: -180px;
+        }
+
+        .decoration-two {
+            bottom: -280px;
+            right: -180px;
+        }
+
+
+        /* =====================================================
+           CONTENEUR PRINCIPAL
+        ===================================================== */
+
+        .language-container {
+            position: relative;
+            z-index: 2;
+
+            width: 90%;
+            max-width: 700px;
+
+            padding: 50px 40px;
+
+            text-align: center;
+
+            background: rgba(50, 0, 8, 0.72);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.45);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* =====================================================
+           ESPACE IMAGE / LOGO
+        ===================================================== */
+
+        .logo-space {
+            width: 150px;
+            height: 150px;
+
+            margin: 0 auto 25px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            border: 6px solid rgba(255, 255, 255, 0.3);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =====================================================
+           IMAGE DU LOGO
+
+           Tu peux remplacer le src par ton image.
+        ===================================================== */
+
+        .logo-space img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            padding: 8px;
+        }
+
+
+        /* =====================================================
+           TEXTE
+        ===================================================== */
+
+        .welcome-small {
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            padding: 7px 18px;
+
+            border-radius: 30px;
+
+            background: var(--rouge);
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: clamp(30px, 5vw, 48px);
+
+            line-height: 1.15;
+
+            margin-bottom: 15px;
+        }
+
+        h1 span {
+            color: #ff3333;
+        }
+
+        .description {
+            max-width: 500px;
+
+            margin: 0 auto 35px;
+
+            color: rgba(255, 255, 255, 0.82);
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           SEPARATEUR
+        ===================================================== */
+
+        .separator {
+            width: 70px;
+            height: 4px;
+
+            margin: 0 auto 30px;
+
+            background: var(--rouge-clair);
+
+            border-radius: 10px;
+        }
+
+
+        /* =====================================================
+           BOUTONS DE LANGUE
+        ===================================================== */
+
+        .language-buttons {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+
+            max-width: 500px;
+
+            margin: auto;
+        }
+
+
+        .language-button {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            min-height: 70px;
+
+            padding: 15px 25px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: white;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                background 0.3s ease;
+
+            overflow: hidden;
+        }
+
+
+        /* Bouton français */
+
+        .french {
+            background: linear-gradient(
+                135deg,
+                var(--rouge-clair),
+                var(--rouge)
+            );
+
+            box-shadow:
+                0 8px 25px rgba(179, 0, 0, 0.35);
+        }
+
+
+        /* Bouton anglais */
+
+        .english {
+            background: linear-gradient(
+                135deg,
+                #760018,
+                var(--bordeaux)
+            );
+
+            box-shadow:
+                0 8px 25px rgba(90, 0, 16, 0.4);
+        }
+
+
+        .language-button:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+
+        .language-button:active {
+            transform: translateY(-1px);
+        }
+
+
+        .flag {
+            font-size: 27px;
+        }
+
+
+        /* =====================================================
+           BAS DE PAGE
+        ===================================================== */
+
+        .footer-text {
+            margin-top: 35px;
+
+            font-size: 12px;
+
+            color: rgba(255, 255, 255, 0.55);
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================================
+           ANIMATION D'APPARITION
+        ===================================================== */
+
+        .language-container {
+            animation: apparition 0.9s ease forwards;
+        }
+
+        @keyframes apparition {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =====================================================
+           TELEPHONE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                min-height: 100vh;
+                padding: 20px 0;
+                background-attachment: scroll;
+            }
+
+            .language-container {
+                width: calc(100% - 28px);
+                max-width: 390px;
+                padding: 30px 20px 25px;
+                border-radius: 22px;
+                margin: 0 auto;
+            }
+
+            .logo-space {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+
+            .welcome-small {
+                font-size: 11px;
+                padding: 7px 17px;
+                margin-bottom: 14px;
+            }
+
+            h1 {
+                font-size: 38px;
+                line-height: 1.08;
+                margin-bottom: 15px;
+            }
+
+            /* Message juste au-dessus des boutons */
+            .language-message {
+                display: block;
+                max-width: 290px;
+                margin: 0 auto 22px;
+                font-size: 17px;
+                line-height: 1.4;
+                color: rgba(255, 255, 255, 0.88);
+            }
+
+            .separator {
+                width: 55px;
+                height: 3px;
+                margin: 0 auto 20px;
+            }
+
+            .description {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .language-buttons {
+                width: 100%;
+                max-width: 270px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin: 0 auto;
+            }
+
+            .language-button {
+                width: 100%;
+                min-height: 58px;
+                padding: 13px 20px;
+                border-radius: 14px;
+                font-size: 19px;
+            }
+
+            .flag {
+                font-size: 25px;
+            }
+
+            .footer-text {
+                margin-top: 22px;
+                font-size: 11px;
+            }
+        }
+
+        /* Très petits écrans */
+        @media (max-width: 380px) {
+
+            .language-container {
+                width: calc(100% - 20px);
+                padding: 25px 16px 22px;
+            }
+
+            .logo-space {
+                width: 105px;
+                height: 105px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .language-message {
+                font-size: 15px;
+            }
+
+            .language-button {
+                min-height: 54px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Décorations -->
+    <div class="background-decoration decoration-one"></div>
+    <div class="background-decoration decoration-two"></div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="language-container">
+
+        <!-- ESPACE POUR TON IMAGE / LOGO -->
+        <div class="logo-space">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeIlgCv1_vXmfp3ckdET-8tTisaETGrO4vzphiGRMA3A&s=10"
+                alt="Winners Chapel Int'l Bonaberi"
+            >
+        </div>
+
+        <!-- Petit titre -->
+        <div class="welcome-small">
+            Bienvenue
+        </div>
+
+        <!-- Titre principal -->
+        <h1>
+            Winners Chapel <span>Bonaberi</span>
+        </h1>
+
+        <!-- Petit message -->
+        <p class="language-message">
+            to go further choose a language<br>
+            pour continuer choisissez une langue
+        </p>
+
+        <div class="separator"></div>
+
+        <!-- Boutons de langue -->
+        <div class="language-buttons">
+
+            <a
+                href="winners_chapel_bonaberi_corrige(2).html"
+                class="language-button french"
+            >
+                <span class="flag">🇫🇷</span>
+                <span>Français</span>
+            </a>
+
+            <a
+                href="winners_chapel_bonaberi_en.html"
+                class="language-button english"
+            >
+                <span class="flag">🇬🇧</span>
+                <span>English</span>
+            </a>
+
+        </div>
+
+        <p class="footer-text">
+            choose a language <br>
+            choisissez une langue
+        </p>
+
+    </main>
+
+</body>
+</html>
