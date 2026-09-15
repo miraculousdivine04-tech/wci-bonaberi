@@ -1,0 +1,1021 @@
+ /* =========================================
+           VARIABLES
+       ========================================= */
+
+        :root {
+            --rouge: #c62828;
+            --rouge-clair: #e53935;
+            --rouge-pale: #fff1f1;
+            --rouge-hover: #a91f1f;
+
+            --noir: #171717;
+            --gris: #666;
+            --gris-clair: #f6f6f6;
+            --blanc: #ffffff;
+
+            --vert: #1e8449;
+            --vert-pale: #eefaf1;
+
+            --ombre: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+            --transition: 0.3s ease;
+        }
+
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--noir);
+            background: var(--blanc);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+
+        /* =========================================
+           UTILITAIRES
+        ========================================= */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            color: var(--rouge);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            margin-top: 8px;
+        }
+
+        .section-title p {
+            max-width: 650px;
+            margin: 15px auto 0;
+            color: var(--gris);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 26px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--rouge);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--rouge-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--rouge);
+            color: var(--rouge);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--rouge);
+            color: white;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .navbar {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 17px;
+            line-height: 1.2;
+        }
+
+        .logo-text small {
+            display: block;
+            color: var(--rouge);
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--rouge);
+        }
+
+        .nav-donate {
+            background: var(--rouge);
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 5px;
+        }
+
+        .nav-donate:hover {
+            background: var(--rouge-hover);
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            min-height: 100vh;
+            padding-top: 75px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 241, 241, 0.97),
+                    rgba(255, 255, 255, 0.82)
+                ),
+                url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDnKbUnHUh78v6cw0E40RZrIoAZJNTMDBFpCUiOqeMkQ&s=10")
+                center/cover;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-tag {
+            color: var(--rouge);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: 1.05;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--rouge);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+
+        /* =========================================
+           WELCOME
+        ========================================= */
+
+        .welcome {
+            background: white;
+        }
+
+        .welcome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .welcome-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--ombre);
+        }
+
+        .welcome-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        .welcome-content h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-content h2 span {
+            color: var(--rouge);
+        }
+
+        .welcome-content p {
+            color: var(--gris);
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================
+           SERVICES
+        ========================================= */
+
+        .services {
+            background: var(--rouge-pale);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--ombre);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin: auto auto 20px;
+            border-radius: 50%;
+            background: var(--rouge-pale);
+            color: var(--rouge);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: var(--gris);
+        }
+
+
+        /* =========================================
+           VERSET / MESSAGE
+        ========================================= */
+
+        .verse {
+            padding: 100px 20px;
+            text-align: center;
+            background: var(--rouge);
+            color: white;
+        }
+
+        .verse blockquote {
+            max-width: 850px;
+            margin: auto;
+            font-size: 30px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .verse cite {
+            display: block;
+            margin-top: 20px;
+            opacity: 0.85;
+        }
+
+
+        /* =========================================
+           EVENTS
+        ========================================= */
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .event-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--ombre);
+        }
+
+        .event-image {
+            height: 210px;
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .event-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .event-content {
+            padding: 25px;
+        }
+
+        .event-date {
+            color: var(--rouge);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .event-content h3 {
+            margin: 8px 0;
+        }
+
+        .event-content p {
+            color: var(--gris);
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           PREDICATIONS
+        ========================================= */
+
+        .sermons {
+            background: var(--gris-clair);
+        }
+
+        .sermon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .sermon-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--ombre);
+        }
+
+        .sermon-thumbnail {
+            height: 200px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 45px;
+        }
+
+        .sermon-content {
+            padding: 22px;
+        }
+
+        .sermon-content small {
+            color: var(--rouge);
+        }
+
+        .sermon-content h3 {
+            margin: 7px 0;
+        }
+
+
+        /* =========================================
+           MINISTERES
+        ========================================= */
+
+        .ministries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .ministry {
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .ministry:hover {
+            border-color: var(--rouge);
+        }
+
+        .ministry-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .ministry p {
+            color: var(--gris);
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           CONTACT
+        ========================================= */
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .contact-icon {
+            flex: 0 0 46px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--rouge-pale);
+            color: var(--rouge);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 4px;
+        }
+
+        .contact-item p {
+            color: var(--gris);
+        }
+
+
+        /* =========================================
+           CELLULES
+        ========================================= */
+
+        .cellules-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .cellule-card {
+            background: var(--blanc);
+            border: 1px solid #eee;
+            border-radius: 10px;
+            box-shadow: var(--ombre);
+            padding: 28px 22px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .cellule-card:hover {
+            border-color: var(--vert);
+            transform: translateY(-4px);
+        }
+
+        .cellule-title {
+            font-size: 18px;
+            color: var(--vert);
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            border-bottom: 2px solid var(--vert);
+        }
+
+        .cellule-contact {
+            text-align: left;
+        }
+
+        .cellule-contact-item {
+            margin-bottom: 14px;
+        }
+
+        .cellule-contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .cellule-label {
+            display: block;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gris);
+            margin-bottom: 4px;
+        }
+
+        .cellule-contact-item p {
+            font-size: 14px;
+            color: var(--noir);
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           DON
+        ========================================= */
+
+        .donation {
+            background: var(--rouge-pale);
+        }
+
+        .donation-box {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--ombre);
+        }
+
+        .donation-box h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .donation-box p {
+            color: var(--gris);
+            max-width: 650px;
+            margin: 0 auto 25px;
+        }
+
+       
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            background: #171717;
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        footer p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        footer h3 {
+            margin-bottom: 18px;
+        }
+
+        footer ul li {
+            margin-bottom: 10px;
+        }
+
+        footer ul li a {
+            color: #aaa;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        footer ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .gallery {
+  background: #fff;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--ombre);
+  background: #111;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel-slide {
+  position: relative;
+  min-width: 100%;
+  height: 500px;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 70px 35px 45px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.78));
+  text-shadow: 0 2px 8px rgba(0,0,0,.65);
+}
+
+.carousel-caption h2 {
+  font-size: clamp(25px, 4vw, 40px);
+  margin: 0 0 8px;
+}
+
+.carousel-caption p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  transition: var(--transition);
+}
+
+.carousel-btn:hover {
+  background: var(--rouge);
+}
+
+.carousel-btn.prev { left: 18px; }
+.carousel-btn.next { right: 18px; }
+
+.carousel-dots {
+  position: absolute;
+  bottom: 18px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.55);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.dot.active,
+.dot:hover {
+  background: #fff;
+  transform: scale(1.15);
+}
+
+
+        /* =========================================
+           BACK TO TOP
+        ========================================= */
+
+        #backToTop {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: var(--rouge);
+            color: white;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+        }
+ /* =========================================
+   PRIERES
+  ========================================= */
+
+.prieres-section {
+    background: #f7f7f7;
+}
+
+.prieres-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.priere-card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: var(--ombre);
+    transition: var(--transition);
+    border-top: 4px solid #2e7d32;
+}
+
+.priere-card:hover {
+    transform: translateY(-6px);
+}
+
+.priere-icon {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.priere-card h3 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 21px;
+}
+
+.priere-card p {
+    color: var(--gris);
+    margin-bottom: 18px;
+    line-height: 1.7;
+}
+
+.priere-verset {
+    display: inline-block;
+    color: var(--rouge);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                display: none;
+                padding: 15px 0;
+                box-shadow: var(--ombre);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 13px 30px;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .welcome-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid,
+            .events-grid,
+            .sermon-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ministries-grid,
+            .cellules-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .prieres-grid {
+          grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+
+            .hero {
+                text-align: center;
+            }
+
+            .hero-content {
+                margin: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .welcome-content h2 {
+                font-size: 32px;
+            }
+
+            .welcome-image img {
+                height: 320px;
+            }
+
+            .carousel-slide {
+                height: 360px;
+            }
+
+            .carousel-caption {
+                padding: 55px 20px 38px;
+            }
+
+            .carousel-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 27px;
+            }
+
+            .carousel-btn.prev { left: 10px; }
+            .carousel-btn.next { right: 10px; }
+
+            .services-grid,
+            .events-grid,
+            .sermon-grid,
+            .ministries-grid,
+            .cellules-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .donation-box {
+                padding: 30px 20px;
+            }
+
+            .verse blockquote {
+                font-size: 22px;
+            }
+
+            .prieres-grid {
+    grid-template-columns: 1fr;
+            }
+        }
