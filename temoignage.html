@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Témoignages - Winners Chapel Int'l Bonaberi</title>
+
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container navbar">
+            <a href="winners_chapel_bonaberi_fr.html#accueil" class="logo">
+                <div class="logo-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeIlgCv1_vXmfp3ckdET-8tTisaETGrO4vzphiGRMA3A&s=10" alt="Logo Winners Chapel Int'l Bonaberi"></div>
+                <div class="logo-text">winners chappel int'l bonaberi<small>living faith church</small></div>
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="winners_chapel_bonaberi_fr.html#accueil">Accueil</a>
+                <a href="winners_chapel_bonaberi_fr.html#eglise">L'Église</a>
+                <a href="winners_chapel_bonaberi_fr.html#programes">Programmes</a>
+                <a href="winners_chapel_bonaberi_fr.html#Agenda">Cette semaine</a>
+                <a href="prayers-fr.html#prieres">Prières</a>
+                <a href="prayers-fr.html#cellules">Cellules</a>
+                <a href="winners_chapel_bonaberi_fr.html#contact">Contact</a>
+                <a href="testimonies_.html" class="nav-donate">English</a>
+            </nav>
+            <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+        </div>
+    </header>
+
+    <!-- =========================================
+         TEMOIGNAGES
+    ========================================== -->
+
+    <section class="section" id="temoignages">
+        <div class="container">
+
+            <div class="section-title">
+                <span>Ils témoignent</span>
+                <h2>Témoignages</h2>
+                <p>
+                    Des membres de notre communauté partagent
+                    comment Dieu a agi dans leur vie.
+                </p>
+            </div>
+
+            <div class="prieres-grid">
+
+                <div class="priere-card">
+                    <h3>Nom du témoin</h3>
+                    <p>
+                        ..........................................................<br>
+                        .....................................................<br>
+                        ..................................................
+                    </p>
+                    <span class="priere-verset">Membre depuis ....</span>
+                </div>
+
+                <div class="priere-card">
+                    <h3>Nom du témoin</h3>
+                    <p>
+                        ..........................................................<br>
+                        .....................................................<br>
+                        ..................................................
+                    </p>
+                    <span class="priere-verset">Membre depuis ....</span>
+                </div>
+
+                <div class="priere-card">
+                    <h3>Nom du témoin</h3>
+                    <p>
+                        ..........................................................<br>
+                        .....................................................<br>
+                        ..................................................
+                    </p>
+                    <span class="priere-verset">Membre depuis ....</span>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+
+                <div>
+
+                    <div class="footer-logo">
+                        winners chappel international bonaberi 
+                    </div>
+
+                    <p>
+                         Maison des signes et prodiges 
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h3>Navigation</h3>
+
+                    <ul>
+
+                        <li>
+                            <a href="winners_chapel_bonaberi_fr.html#accueil">Accueil</a>
+                        </li>                        <li>
+                            <a href="winners_chapel_bonaberi_fr.html#eglise">L'Église</a>
+                        </li>
+
+                        <li>
+                            <a href="winners_chapel_bonaberi_fr.html#programes">Événements</a>
+                        </li>
+
+                        <li>
+                            <a href="winners_chapel_bonaberi_fr.html#contact">Contact</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h3>Suivez-nous</h3>
+
+                    <ul>
+
+                        <li>
+                            <a href="https://web.facebook.com/p/Winners-Chapel-International-Bonaberi-61553169941108/" target="_blank" rel="noopener">Facebook</a>
+                        </li>
+
+                        <li>
+                            <a href="https://wa.me/2376773687" target="_blank" rel="noopener">WhatsApp</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 winners chappel int'l bonaberi 
+                    Tous droits réservés.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        // ================================
+        // MENU MOBILE
+        // ================================
+
+        const menuBtn = document.getElementById("menuBtn");
+        const navLinks = document.getElementById("navLinks");
+
+        menuBtn.addEventListener("click", () => {
+
+            navLinks.classList.toggle("active");
+
+        });
+
+
+        // Fermer le menu après avoir cliqué
+        // sur un lien
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

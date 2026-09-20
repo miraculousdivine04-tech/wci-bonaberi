@@ -238,20 +238,48 @@
             display: flex;
             align-items: center;
             background:
-                linear-gradient(
-                    90deg,
-                    rgba(255, 241, 241, 0.97),
-                    rgba(255, 255, 255, 0.82)
-                ),
                 url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDnKbUnHUh78v6cw0E40RZrIoAZJNTMDBFpCUiOqeMkQ&s=10")
                 center/cover;
         }
 
-        .hero-content {
+                .hero-content {
+            position: relative;
             max-width: 700px;
+            padding: 35px 40px;
+            border-radius: 26px;
+            overflow: hidden;
+
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.35),
+                rgba(255, 255, 255, 0.12)
+            );
+
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+            border: 1px solid rgba(255, 255, 255, 0.55);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.15),
+                inset 0 1px 1px rgba(255, 255, 255, 0.7),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+
+            animation: heroApparition 0.9s ease forwards;
         }
 
-        .hero-tag {
+        @keyframes heroApparition {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+            
+       .hero-tag {
             color: var(--rouge);
             font-weight: bold;
             text-transform: uppercase;
@@ -260,7 +288,8 @@
             margin-bottom: 15px;
         }
 
-        .hero h1 {
+        .hero h1 {        
+            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(255, 255, 255, 0.9);
             font-size: clamp(42px, 6vw, 76px);
             line-height: 1.05;
             margin-bottom: 25px;
@@ -271,6 +300,7 @@
         }
 
         .hero p {
+            text-shadow: 0 1px 8px rgba(255, 255, 255, 0.85);
             font-size: 18px;
             color: #555;
             max-width: 600px;
