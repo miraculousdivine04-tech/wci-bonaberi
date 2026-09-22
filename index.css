@@ -37,10 +37,34 @@
         }
 
         body {
+            position: relative;
             font-family: Arial, Helvetica, sans-serif;
             color: var(--noir);
             background: var(--blanc);
             line-height: 1.6;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.55),
+                    rgba(255, 255, 255, 0.55)
+                ),
+                url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwUOtUpSG4jAymvzeJlxoYQmHYR9kPQsoEW6NLw7IC_Q&s=10");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            filter: blur(16px) saturate(0.5);
+            z-index: -1;
         }
 
         a {
@@ -238,33 +262,17 @@
             display: flex;
             align-items: center;
             background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 241, 241, 0.97),
+                    rgba(255, 255, 255, 0.82)
+                ),
                 url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDnKbUnHUh78v6cw0E40RZrIoAZJNTMDBFpCUiOqeMkQ&s=10")
                 center/cover;
         }
 
-                .hero-content {
-            position: relative;
+        .hero-content {
             max-width: 700px;
-            padding: 35px 40px;
-            border-radius: 26px;
-            overflow: hidden;
-
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.35),
-                rgba(255, 255, 255, 0.12)
-            );
-
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-
-            border: 1px solid rgba(255, 255, 255, 0.55);
-
-            box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.15),
-                inset 0 1px 1px rgba(255, 255, 255, 0.7),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.05);
-
             animation: heroApparition 0.9s ease forwards;
         }
 
