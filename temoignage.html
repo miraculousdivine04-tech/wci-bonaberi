@@ -129,7 +129,7 @@
                     </ul>
 
                 </div>
-
+09
 
                 <div>
 
@@ -193,6 +193,22 @@
             });
 
         });
+    // ================================
+    // FERMER LE MENU SI CLIC EN DEHORS
+    // ================================
+
+    document.addEventListener("click", (e) => {
+
+        const clicDansLeMenu = navLinks.contains(e.target);
+        const clicSurLeBouton = menuBtn.contains(e.target);
+
+        if (!clicDansLeMenu && !clicSurLeBouton) {
+
+            navLinks.classList.remove("active");
+
+        }
+
+    });
 
     </script>
 

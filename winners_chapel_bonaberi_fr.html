@@ -127,7 +127,7 @@
                     <div class="event-image">
 
                         <img
-                            src="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=900&q=80"
+                            src="image/sunday-service.jpg"
                             alt="Culte"
                         >
 
@@ -141,7 +141,7 @@
 
                         <h4>
                           premier culte 7h00- 9h00 <br/>
-                          deuxieme culte 9h00-12h
+                          deuxieme culte 9h00-11h
                         </h4>
 
                         <p>
@@ -476,7 +476,7 @@
                         </li>
 
                         <li>
-                            <a href="https://wa.me/23767703687" target="_blank" rel="noopener">WhatsApp</a>
+                            <a href="https://wa.me/237677063687" target="_blank" rel="noopener">WhatsApp</a>
                         </li>
 
                     </ul>
@@ -639,6 +639,23 @@
             goToSlide(0);
             startAutoSlide();
         }
+    // ================================
+    // FERMER LE MENU SI CLIC EN DEHORS
+    // ================================
+
+    document.addEventListener("click", (e) => {
+
+        const clicDansLeMenu = navLinks.contains(e.target);
+        const clicSurLeBouton = menuBtn.contains(e.target);
+
+        if (!clicDansLeMenu && !clicSurLeBouton) {
+
+            navLinks.classList.remove("active");
+
+        }
+
+    });
+
 
     </script>
 
