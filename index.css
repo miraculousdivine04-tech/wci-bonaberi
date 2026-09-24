@@ -250,6 +250,38 @@
             font-size: 28px;
             cursor: pointer;
         }
+                .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .header-quick-links {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+
+            .header-quick-links {
+                display: flex;
+                gap: 14px;
+                align-items: center;
+                margin-right: 12px;
+            }
+
+            .header-quick-links a {
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--rouge);
+                white-space: nowrap;
+            }
+
+            .header-quick-links a:hover {
+                color: var(--bordeaux);
+            }
+        }
 
 
         /* =========================================
