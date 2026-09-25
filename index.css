@@ -173,7 +173,8 @@
         }
 
         .navbar {
-            height: 75px;
+            height: auto;
+            min-height: 75px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -187,9 +188,9 @@
         }
 
         .logo-icon {
-            width: 48px;
-            height: 48px;
-            flex: 0 0 48px;
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
             border-radius: 50%;
             overflow: hidden;
             background: white;
@@ -263,7 +264,6 @@
         }
 
         @media (max-width: 900px) {
-
             .header-quick-links {
                 display: flex;
                 gap: 14px;
