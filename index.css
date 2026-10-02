@@ -799,9 +799,14 @@
   max-width: 1100px;
   margin: 0 auto;
   overflow: hidden;
-  border-radius: 16px;
+  border: 1px solid #eee;
+  border-radius: 10px;
   box-shadow: var(--ombre);
-  background: #111;
+  background: var(--blanc);
+  /* appui long sur mobile : pas de menu "enregistrer l'image" ni de sélection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .carousel-track {
@@ -809,43 +814,44 @@
   transition: transform 0.6s ease-in-out;
 }
 
+/* Slide = image en haut + texte en dessous (comme .event-card) */
 .carousel-slide {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   min-width: 100%;
-  height: 500px;
 }
 
 .carousel-slide img {
   width: 100%;
-  height: 100%;
+  height: 420px;
   object-fit: cover;
   display: block;
 }
 
 .carousel-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 70px 35px 45px;
-  color: #fff;
-  background: linear-gradient(transparent, rgba(0,0,0,.78));
-  text-shadow: 0 2px 8px rgba(0,0,0,.65);
+  flex: 1;
+  padding: 25px;
+  background: var(--blanc);
+  color: var(--noir);
 }
 
 .carousel-caption h2 {
-  font-size: clamp(25px, 4vw, 40px);
+  font-size: clamp(20px, 3vw, 26px);
+  color: var(--noir);
   margin: 0 0 8px;
 }
 
 .carousel-caption p {
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gris);
   margin: 0;
 }
 
+/* Flèches centrées sur l'image (hauteur image 420px / 2) */
 .carousel-btn {
   position: absolute;
-  top: 50%;
+  top: 210px;
   transform: translateY(-50%);
   width: 46px;
   height: 46px;
@@ -867,13 +873,13 @@
 .carousel-btn.prev { left: 18px; }
 .carousel-btn.next { right: 18px; }
 
+/* Points de navigation sous le texte */
 .carousel-dots {
-  position: absolute;
-  bottom: 18px;
-  right: 20px;
   display: flex;
+  justify-content: center;
   gap: 8px;
-  z-index: 3;
+  padding: 0 0 20px;
+  background: var(--blanc);
 }
 
 .dot {
@@ -882,14 +888,14 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255,255,255,.55);
+  background: #ddd;
   cursor: pointer;
   transition: var(--transition);
 }
 
 .dot.active,
 .dot:hover {
-  background: #fff;
+  background: var(--rouge);
   transform: scale(1.15);
 }
 
@@ -1051,15 +1057,16 @@
                 height: 320px;
             }
 
-            .carousel-slide {
-                height: 360px;
+            .carousel-slide img {
+                height: 260px;
             }
 
             .carousel-caption {
-                padding: 55px 20px 38px;
+                padding: 20px;
             }
 
             .carousel-btn {
+                top: 130px;
                 width: 38px;
                 height: 38px;
                 font-size: 27px;

@@ -50,6 +50,7 @@
     </script>
 
   <link rel="stylesheet" href="index.css">
+
 </head>
 
 
@@ -696,8 +697,23 @@
                 });
             });
 
-            carousel.addEventListener("mouseenter", () => clearInterval(timer));
-            carousel.addEventListener("mouseleave", startAutoSlide);
+            // Pause : souris (survol) + toucher (maintenir le doigt appuyé)
+            carousel.addEventListener("pointerenter", (e) => {
+                if (e.pointerType === "mouse") clearInterval(timer);
+            });
+            carousel.addEventListener("pointerleave", (e) => {
+                if (e.pointerType === "mouse") startAutoSlide();
+            });
+            carousel.addEventListener("pointerdown", (e) => {
+                if (e.pointerType !== "mouse") clearInterval(timer);
+            });
+            ["pointerup", "pointercancel"].forEach((evt) => {
+                carousel.addEventListener(evt, (e) => {
+                    if (e.pointerType !== "mouse") startAutoSlide();
+                });
+            });
+            // Empêche le menu "enregistrer l'image" lors d'un appui long
+            carousel.addEventListener("contextmenu", (e) => e.preventDefault());
 
             goToSlide(0);
             startAutoSlide();
