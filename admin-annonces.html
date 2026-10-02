@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Annonces — WCI Bonaberi</title>
+<style>
+  :root{
+    --rouge:#c62828; --rouge-hover:#a91f1f; --rouge-pale:#fff1f1;
+    --noir:#171717; --gris:#666; --gris-clair:#f6f6f6; --vert:#1e8449; --vert-pale:#eefaf1;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--gris-clair);color:var(--noir);line-height:1.5}
+  header{background:var(--rouge);color:#fff;padding:18px 20px}
+  header h1{margin:0;font-size:20px}
+  header p{margin:4px 0 0;font-size:14px;opacity:.9}
+  main{max-width:1000px;margin:0 auto;padding:18px 14px 60px}
+  .card{background:#fff;border:1px solid #eee;border-radius:10px;padding:18px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+  h2{margin:0 0 12px;font-size:18px}
+  h3{margin:0;font-size:16px}
+  label{display:block;font-size:13px;font-weight:600;margin:12px 0 4px}
+  input[type=text],input[type=password],textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit;background:#fff}
+  input:focus,textarea:focus{outline:2px solid var(--rouge);border-color:var(--rouge)}
+  textarea{resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  button{font:inherit;cursor:pointer;border-radius:8px;border:none;padding:10px 16px}
+  .primary{background:var(--rouge);color:#fff;font-weight:700}
+  .primary:hover{background:var(--rouge-hover)}
+  .primary:disabled{opacity:.5;cursor:not-allowed}
+  .ghost{background:#fff;border:1px solid #ccc;padding:7px 12px}
+  .ghost:hover{border-color:var(--rouge);color:var(--rouge)}
+  .ghost:disabled{opacity:.4;cursor:not-allowed}
+  .danger{color:var(--rouge);border-color:#e7b4b4}
+  details{margin-top:12px;font-size:14px;color:var(--gris)}
+  summary{cursor:pointer;color:var(--noir);font-weight:600}
+  details p,details ol{margin:8px 0}
+  .status{margin-top:12px;padding:10px 12px;border-radius:8px;font-size:14px;display:none;white-space:pre-wrap}
+  .status.show{display:block}
+  .status.err{background:var(--rouge-pale);color:var(--rouge-hover)}
+  .status.ok{background:var(--vert-pale);color:var(--vert)}
+  .status.info{background:#eef3fb;color:#27508a}
+  .slide-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .tools{display:flex;gap:6px}
+  .check{display:flex;align-items:center;gap:8px;font-weight:500;margin:12px 0}
+  .check input{width:18px;height:18px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .col{border:1px solid #eee;border-radius:10px;padding:12px;background:#fafafa}
+  .col h4{margin:0 0 8px;color:var(--rouge);font-size:14px;letter-spacing:.5px}
+  .imgbox{height:170px;border-radius:8px;overflow:hidden;background:#e9e9e9;display:flex;align-items:center;justify-content:center}
+  .imgbox img{width:100%;height:100%;object-fit:cover;display:block}
+  .imgbox img.empty{display:none}
+  .imgname{font-size:12px;color:var(--gris);margin:6px 0;word-break:break-all}
+  .filebtn{display:inline-block;background:#fff;border:1px solid #ccc;border-radius:8px;padding:8px 12px;font-size:14px;font-weight:600;cursor:pointer;margin:0}
+  .filebtn:hover{border-color:var(--rouge);color:var(--rouge)}
+  #log{background:#111;color:#cfe8cf;border-radius:8px;padding:12px;font-size:13px;white-space:pre-wrap;display:none;margin-top:12px;max-height:240px;overflow:auto}
+  .hint{font-size:13px;color:var(--gris);margin:4px 0 0}
+  @media (max-width:760px){.row,.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Admin Annonces — Winners' Chapel Bonaberi</h1>
+  <p>Modifie les annonces du carrousel (FR + EN) puis publie en un clic.</p>
+</header>
+
+<main>
+
+  <!-- 1. CONNEXION -->
+  <section class="card" id="connect">
+    <h2>1. Connexion à GitHub</h2>
+    <div class="row">
+      <div>
+        <label for="user">Identifiant GitHub</label>
+        <input type="text" id="user" autocomplete="username" placeholder="ex : donald237">
+      </div>
+      <div>
+        <label for="token">Jeton d'accès GitHub (à la place du mot de passe)</label>
+        <input type="password" id="token" autocomplete="current-password" placeholder="github_pat_… ou ghp_…">
+      </div>
+    </div>
+    <label for="repo">Nom du dépôt</label>
+    <input type="text" id="repo" placeholder="ex : wcibonaberi   (ou  proprietaire/depot)">
+    <p class="hint">Le jeton n'est jamais enregistré : il reste dans la page et n'est envoyé qu'à GitHub (api.github.com).</p>
+
+    <details>
+      <summary>Pourquoi un jeton et pas mon mot de passe ?</summary>
+      <p>Depuis 2021, GitHub refuse le mot de passe normal pour envoyer du code (push). Il faut un « jeton d'accès personnel », qui s'utilise exactement comme un mot de passe et que tu peux supprimer à tout moment.</p>
+      <ol>
+        <li>Connecte-toi à GitHub, puis ouvre <strong>github.com/settings/personal-access-tokens/new</strong>.</li>
+        <li>Donne-lui un nom (ex : « admin annonces »), une durée (ex : 90 jours).</li>
+        <li><em>Repository access</em> → <em>Only select repositories</em> → choisis le dépôt du site.</li>
+        <li><em>Permissions</em> → <em>Repository permissions</em> → <strong>Contents : Read and write</strong>.</li>
+        <li>Clique sur <em>Generate token</em>, copie-le et colle-le ci-dessus.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>Paramètres avancés</summary>
+      <div class="row">
+        <div><label for="branch">Branche</label><input type="text" id="branch" value="main"></div>
+        <div><label for="imgDir">Dossier des images</label><input type="text" id="imgDir" value="image"></div>
+      </div>
+      <div class="row">
+        <div><label for="frPath">Fichier français</label><input type="text" id="frPath" value="winners_chapel_bonaberi_fr.html"></div>
+        <div><label for="enPath">Fichier anglais</label><input type="text" id="enPath" value="winners_chapel_bonaberi_en.html"></div>
+      </div>
+    </details>
+
+    <div style="margin-top:14px">
+      <button type="button" class="primary" id="loadBtn">Charger les annonces</button>
+    </div>
+    <div class="status" id="connStatus"></div>
+  </section>
+
+  <!-- 2. EDITION -->
+  <section id="editor" hidden>
+    <h2 style="margin:6px 0 12px">2. Modifier les annonces</h2>
+    <div id="slides"></div>
+    <button type="button" class="ghost" id="addBtn">+ Ajouter une annonce</button>
+  </section>
+
+  <!-- 3. PUBLICATION -->
+  <section class="card" id="publish" hidden style="margin-top:16px">
+    <h2>3. Publier sur GitHub</h2>
+    <label for="msg">Message du commit</label>
+    <input type="text" id="msg" value="Mise à jour des annonces">
+    <p class="hint">Ce bouton fait l'équivalent de <code>git add .</code> + <code>git commit -m "…"</code> + <code>git push</code> : un seul commit contenant les 2 pages et les nouvelles images.</p>
+    <div style="margin-top:14px">
+      <button type="button" class="primary" id="pushBtn">🚀 Publier sur GitHub</button>
+    </div>
+    <div class="status" id="pushStatus"></div>
+    <pre id="log"></pre>
+  </section>
+
+</main>
+
+<script>
+(function(){
+'use strict';
+
+/* <core> — fonctions pures (testées hors navigateur) */
+
+function htmlToText(h){
+  h = String(h || '')
+    .replace(/<\/br\s*>/gi, '<br>')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '');
+  var t = document.createElement('textarea');
+  t.innerHTML = h;
+  return t.value.split('\n').map(function(l){ return l.replace(/\s+/g,' ').trim(); }).filter(Boolean).join('\n');
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
+
+function locate(html){
+  var s = html.indexOf('<div class="carousel-track">');
+  var e = html.indexOf('<button class="carousel-btn prev"');
+  if (s < 0 || e < 0 || e < s) throw new Error("Carrousel introuvable dans le fichier (structure inattendue).");
+  return {s:s, e:e};
+}
+
+function parseSlides(html){
+  var loc = locate(html);
+  var track = html.slice(loc.s, loc.e);
+  return track.split('<div class="carousel-slide">').slice(1).map(function(p){
+    var img = (p.match(/<img[^>]*?src="([^"]*)"/i) || [])[1] || '';
+    var title = htmlToText((p.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i) || [])[1] || '').replace(/\s+/g,' ').trim();
+    var pm = p.match(/<p[^>]*>([\s\S]*?)(?:<\/p>|<\/div>)/i);
+    return {image: img, title: title, text: htmlToText(pm ? pm[1] : '')};
+  });
+}
+
+function slideHtml(d){
+  var lines = d.text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean).map(esc);
+  var p = lines.join('<br/>\n                            ');
+  return '                    <div class="carousel-slide">\n' +
+         '                        <img src="' + escAttr(d.image) + '" alt="' + escAttr(d.title) + '">\n' +
+         '                        <div class="carousel-caption">\n' +
+         '                            <h2>' + esc(d.title) + '</h2>\n' +
+         '                            <p>' + p + '</p>\n' +
+         '                        </div>\n' +
+         '                    </div>';
+}
+
+// slides : [{title, text, image}]  (déjà choisis pour la langue)
+function buildHtml(html, lang, slides){
+  var loc = locate(html);
+  var body = slides.map(slideHtml).join('\n\n');
+  var out = html.slice(0, loc.s) +
+            '<div class="carousel-track">\n' + body + '\n                </div>\n\n                ' +
+            html.slice(loc.e);
+  var label = lang === 'fr' ? function(n){ return "Aller à l'image " + n; } : function(n){ return 'Go to image ' + n; };
+  var dots = slides.map(function(_, i){
+    return '                    <button class="dot' + (i === 0 ? ' active' : '') + '" type="button" aria-label="' + label(i+1) + '"></button>';
+  }).join('\n');
+  var dotsBlock = '<div class="carousel-dots">\n' + dots + '\n                </div>';
+  return out.replace(/<div class="carousel-dots">[\s\S]*?<\/div>/, function(){ return dotsBlock; });
+}
+
+function slug(name){
+  var base = String(name || '').replace(/\.[^.]+$/, '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return base || 'annonce';
+}
+
+/* </core> */
+
+
+/* ---------- Etat & utilitaires ---------- */
+var $ = function(id){ return document.getElementById(id); };
+var API = 'https://api.github.com';
+var state = {token:'', owner:'', repo:'', branch:'main', frPath:'', enPath:'', imgDir:'image', slides:[], dirty:false};
+var previewCache = new Map();
+
+function setStatus(el, msg, type){
+  el.className = 'status show ' + type;
+  el.textContent = msg;
+}
+function clearStatus(el){ el.className = 'status'; el.textContent = ''; }
+function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+function markDirty(){ state.dirty = true; }
+window.addEventListener('beforeunload', function(e){
+  if (state.dirty) { e.preventDefault(); e.returnValue = ''; }
+});
+
+function saveSettings(){
+  try {
+    localStorage.setItem('wci-admin', JSON.stringify({
+      user: $('user').value, repo: $('repo').value, branch: $('branch').value,
+      frPath: $('frPath').value, enPath: $('enPath').value, imgDir: $('imgDir').value
+    }));
+  } catch(e){}
+}
+function loadSettings(){
+  try {
+    var s = JSON.parse(localStorage.getItem('wci-admin') || '{}');
+    Object.keys(s).forEach(function(k){ if ($(k) && s[k]) $(k).value = s[k]; });
+  } catch(e){}
+}
+
+function explain(err){
+  var s = err && err.status;
+  if (s === 401) return "Jeton invalide ou expiré. Vérifie que tu as collé le jeton (et non ton mot de passe GitHub).";
+  if (s === 403) return "Accès refusé : le jeton doit avoir la permission « Contents : Read and write » sur ce dépôt (ou limite de requêtes atteinte).\n(" + err.message + ")";
+  if (s === 404) return "Introuvable : vérifie le nom du dépôt, la branche, le nom des fichiers, et que le jeton a bien accès à ce dépôt.";
+  if (s === 409 || s === 422) return "Conflit : le dépôt a changé entre-temps. Recharge les annonces puis réessaie.\n(" + err.message + ")";
+  if (err instanceof TypeError) return "Impossible de joindre GitHub. Vérifie ta connexion internet.";
+  return (err && err.message) || String(err);
+}
+
+/* ---------- API GitHub ---------- */
+async function gh(path, opts){
+  opts = opts || {};
+  var headers = {
+    'Authorization': 'Bearer ' + state.token,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  };
+  if (opts.body) headers['Content-Type'] = 'application/json';
+  var res = await fetch(API + path, {method: opts.method || 'GET', headers: headers, body: opts.body});
+  if (!res.ok) {
+    var msg = '';
+    try { msg = (await res.json()).message; } catch(e){}
+    var err = new Error(msg || res.statusText);
+    err.status = res.status;
+    throw err;
+  }
+  return res.status === 204 ? null : res.json();
+}
+async function ghRaw(path, ref){
+  var url = API + '/repos/' + state.owner + '/' + state.repo + '/contents/' + encPath(path) + '?ref=' + encodeURIComponent(ref);
+  var res = await fetch(url, {headers: {
+    'Authorization': 'Bearer ' + state.token,
+    'Accept': 'application/vnd.github.raw+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  }});
+  if (!res.ok) {
+    var err = new Error('Fichier non lu : ' + path);
+    err.status = res.status;
+    throw err;
+  }
+  return res;
+}
+function repoPath(){ return '/repos/' + state.owner + '/' + state.repo; }
+
+/* ---------- Connexion / chargement ---------- */
+$('loadBtn').addEventListener('click', async function(){
+  var user = $('user').value.trim(), token = $('token').value.trim(), repoIn = $('repo').value.trim();
+  if (!user || !token || !repoIn) { setStatus($('connStatus'), "Remplis l'identifiant, le jeton et le nom du dépôt.", 'err'); return; }
+
+  var parts = repoIn.replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '').split('/').filter(Boolean);
+  state.token  = token;
+  state.owner  = parts.length > 1 ? parts[0] : user;
+  state.repo   = parts.length > 1 ? parts[1] : parts[0];
+  state.branch = $('branch').value.trim() || 'main';
+  state.frPath = $('frPath').value.trim();
+  state.enPath = $('enPath').value.trim();
+  state.imgDir = ($('imgDir').value.trim() || 'image').replace(/^\/+|\/+$/g, '');
+
+  $('loadBtn').disabled = true;
+  setStatus($('connStatus'), 'Connexion en cours…', 'info');
+  try {
+    var me = await gh('/user');
+    var fr = await (await ghRaw(state.frPath, state.branch)).text();
+    var en = await (await ghRaw(state.enPath, state.branch)).text();
+    var frS = parseSlides(fr), enS = parseSlides(en);
+    var n = Math.max(frS.length, enS.length);
+    var empty = {image:'', title:'', text:''};
+    state.slides = [];
+    for (var i = 0; i < n; i++) {
+      var f = frS[i] || empty, e = enS[i] || empty;
+      var same = f.image === e.image;
+      var frImg = {path: f.image, blob: null, url: ''};
+      var enImg = same ? frImg : {path: e.image, blob: null, url: ''};
+      state.slides.push({same: same,
+        fr: {title: f.title, text: f.text, image: frImg},
+        en: {title: e.title, text: e.text, image: enImg}});
+    }
+    saveSettings();
+    state.dirty = false;
+    render();
+    $('editor').hidden = false;
+    $('publish').hidden = false;
+    var warn = (me.login.toLowerCase() !== user.toLowerCase())
+      ? "\nAttention : ce jeton appartient au compte « " + me.login + " », pas à « " + user + " »." : '';
+    setStatus($('connStatus'), 'Connecté en tant que ' + me.login + ' — ' + n + ' annonce(s) chargée(s).' + warn, 'ok');
+  } catch(err){
+    setStatus($('connStatus'), explain(err), 'err');
+  } finally {
+    $('loadBtn').disabled = false;
+  }
+});
+
+/* ---------- Aperçu des images ---------- */
+async function previewUrl(img){
+  if (img.url) return img.url;
+  if (!img.path) return '';
+  if (/^(https?:|data:)/i.test(img.path)) { img.url = img.path; return img.url; }
+  if (previewCache.has(img.path)) { img.url = previewCache.get(img.path); return img.url; }
+  try {
+    var res = await ghRaw(img.path, state.branch);
+    img.url = URL.createObjectURL(await res.blob());
+    previewCache.set(img.path, img.url);
+  } catch(e){ img.url = ''; }
+  return img.url;
+}
+async function showImage(col, img){
+  var el = col.querySelector('img'), nm = col.querySelector('.imgname');
+  var tag = String(Math.random());
+  el.dataset.tag = tag;
+  nm.textContent = img.path ? ((img.blob ? 'Nouvelle image : ' : '') + img.path) : "Aucune image";
+  el.classList.add('empty');
+  el.removeAttribute('src');
+  var u = await previewUrl(img);
+  if (el.dataset.tag !== tag) return;
+  if (u) { el.src = u; el.classList.remove('empty'); }
+  else if (img.path) nm.textContent += ' (aperçu indisponible)';
+}
+
+/* ---------- Compression & nom des images ---------- */
+async function prepareImage(file){
+  if (file.type === 'image/gif') return {blob: file, ext: 'gif'};
+  var bmp;
+  try { bmp = await createImageBitmap(file, {imageOrientation: 'from-image'}); }
+  catch(e){ bmp = await createImageBitmap(file); }
+  var max = 1600, ratio = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  var c = document.createElement('canvas');
+  c.width = Math.round(bmp.width * ratio);
+  c.height = Math.round(bmp.height * ratio);
+  var ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, c.width, c.height);
+  ctx.drawImage(bmp, 0, 0, c.width, c.height);
+  var blob = await new Promise(function(r){ c.toBlob(r, 'image/jpeg', 0.85); });
+  return {blob: blob, ext: 'jpg'};
+}
+
+/* ---------- Affichage des cartes ---------- */
+function colTpl(lang){
+  return '<div class="col" data-lang="' + lang + '">' +
+    '<h4>' + (lang === 'fr' ? 'FRANÇAIS' : 'ENGLISH') + '</h4>' +
+    '<div class="imgbox"><img alt="" class="empty"></div>' +
+    '<div class="imgname"></div>' +
+    '<label class="filebtn">Changer l\'image<input type="file" accept="image/*" hidden data-a="file"></label>' +
+    '<label>Titre</label><input type="text" data-f="title">' +
+    '<label>Texte <span style="font-weight:400;color:#888">(un retour à la ligne = une nouvelle ligne)</span></label>' +
+    '<textarea rows="4" data-f="text"></textarea>' +
+  '</div>';
+}
+
+function render(){
+  var box = $('slides');
+  box.innerHTML = '';
+  state.slides.forEach(function(sl, i){
+    var el = document.createElement('article');
+    el.className = 'card slide';
+    el.innerHTML =
+      '<div class="slide-head"><h3>Annonce ' + (i+1) + '</h3><div class="tools">' +
+        '<button type="button" class="ghost" data-a="up"' + (i === 0 ? ' disabled' : '') + ' title="Monter">↑</button>' +
+        '<button type="button" class="ghost" data-a="down"' + (i === state.slides.length - 1 ? ' disabled' : '') + ' title="Descendre">↓</button>' +
+        '<button type="button" class="ghost danger" data-a="del">Supprimer</button>' +
+      '</div></div>' +
+      '<label class="check"><input type="checkbox" data-a="same"> Utiliser la même image en français et en anglais</label>' +
+      '<div class="cols">' + colTpl('fr') + colTpl('en') + '</div>';
+
+    el.querySelector('[data-a=same]').checked = sl.same;
+    ['fr','en'].forEach(function(l){
+      var col = el.querySelector('.col[data-lang=' + l + ']');
+      col.querySelector('[data-f=title]').value = sl[l].title;
+      col.querySelector('[data-f=text]').value = sl[l].text;
+      showImage(col, sl[l].image);
+    });
+
+    el.addEventListener('input', function(e){
+      var col = e.target.closest('.col'), f = e.target.dataset.f;
+      if (col && f) { sl[col.dataset.lang][f] = e.target.value; markDirty(); }
+    });
+
+    el.addEventListener('change', async function(e){
+      var a = e.target.dataset.a;
+      if (a === 'same') {
+        sl.same = e.target.checked;
+        sl.en.image = sl.same ? sl.fr.image : Object.assign({}, sl.fr.image);
+        showImage(el.querySelector('.col[data-lang=en]'), sl.en.image);
+        markDirty();
+      } else if (a === 'file' && e.target.files[0]) {
+        var file = e.target.files[0], col = e.target.closest('.col'), lang = col.dataset.lang;
+        e.target.value = '';
+        try {
+          var prep = await prepareImage(file);
+          var name = slug(file.name) + '-' + Date.now().toString(36) + '.' + prep.ext;
+          var img = {path: state.imgDir + '/' + name, blob: prep.blob, url: URL.createObjectURL(prep.blob)};
+          if (sl.same) { sl.fr.image = img; sl.en.image = img; }
+          else { sl[lang].image = img; }
+          ['fr','en'].forEach(function(l){ showImage(el.querySelector('.col[data-lang=' + l + ']'), sl[l].image); });
+          markDirty();
+        } catch(err){
+          alert("Cette image n'a pas pu être lue. Essaie un fichier JPG ou PNG.");
+        }
+      }
+    });
+
+    el.addEventListener('click', function(e){
+      var b = e.target.closest('button[data-a]');
+      if (!b) return;
+      var a = b.dataset.a, idx = state.slides.indexOf(sl);
+      if (a === 'up' && idx > 0) { state.slides.splice(idx-1, 0, state.slides.splice(idx, 1)[0]); markDirty(); render(); }
+      if (a === 'down' && idx < state.slides.length - 1) { state.slides.splice(idx+1, 0, state.slides.splice(idx, 1)[0]); markDirty(); render(); }
+      if (a === 'del' && confirm("Supprimer l'annonce " + (idx+1) + " ?")) { state.slides.splice(idx, 1); markDirty(); render(); }
+    });
+
+    box.appendChild(el);
+  });
+}
+
+$('addBtn').addEventListener('click', function(){
+  var img = {path: '', blob: null, url: ''};
+  state.slides.push({same: true,
+    fr: {title: '', text: '', image: img},
+    en: {title: '', text: '', image: img}});
+  markDirty();
+  render();
+  var last = $('slides').lastElementChild;
+  if (last) last.scrollIntoView({behavior: 'smooth', block: 'start'});
+});
+
+/* ---------- Publication (add + commit + push) ---------- */
+function log(line){
+  var pre = $('log');
+  pre.style.display = 'block';
+  pre.textContent += line + '\n';
+  pre.scrollTop = pre.scrollHeight;
+}
+function blobToBase64(blob){
+  return new Promise(function(resolve, reject){
+    var r = new FileReader();
+    r.onload = function(){ resolve(String(r.result).split(',')[1]); };
+    r.onerror = reject;
+    r.readAsDataURL(blob);
+  });
+}
+
+function validate(){
+  if (!state.slides.length) return "Il n'y a aucune annonce à publier.";
+  for (var i = 0; i < state.slides.length; i++) {
+    var sl = state.slides[i], n = i + 1;
+    if (!sl.fr.image.path) return "Annonce " + n + " (FR) : choisis une image.";
+    if (!sl.en.image.path) return "Annonce " + n + " (EN) : choisis une image.";
+    if (!sl.fr.title.trim()) return "Annonce " + n + " : le titre français est vide.";
+    if (!sl.en.title.trim()) return "Annonce " + n + " : le titre anglais est vide.";
+  }
+  return '';
+}
+
+$('pushBtn').addEventListener('click', async function(){
+  clearStatus($('pushStatus'));
+  $('log').textContent = '';
+  var problem = validate();
+  if (problem) { setStatus($('pushStatus'), problem, 'err'); return; }
+  var message = $('msg').value.trim() || 'Mise à jour des annonces';
+
+  $('pushBtn').disabled = true;
+  try {
+    log('1/5 Lecture de la dernière version du dépôt…');
+    var ref = await gh(repoPath() + '/git/ref/heads/' + encodeURIComponent(state.branch));
+    var parent = ref.object.sha;
+    var parentCommit = await gh(repoPath() + '/git/commits/' + parent);
+    var baseTree = parentCommit.tree.sha;
+
+    // On repart de la version actuelle des pages pour ne rien écraser d'autre
+    var frNow = await (await ghRaw(state.frPath, parent)).text();
+    var enNow = await (await ghRaw(state.enPath, parent)).text();
+    var frNew = buildHtml(frNow, 'fr', state.slides.map(function(s){ return {title: s.fr.title.trim(), text: s.fr.text, image: s.fr.image.path}; }));
+    var enNew = buildHtml(enNow, 'en', state.slides.map(function(s){ return {title: s.en.title.trim(), text: s.en.text, image: s.en.image.path}; }));
+
+    var newImgs = new Map();
+    state.slides.forEach(function(s){
+      [s.fr.image, s.en.image].forEach(function(im){ if (im.blob) newImgs.set(im.path, im); });
+    });
+
+    if (frNew === frNow && enNew === enNow && newImgs.size === 0) {
+      log('Aucun changement à publier.');
+      setStatus($('pushStatus'), 'Aucun changement : les annonces sont déjà à jour sur GitHub.', 'info');
+      return;
+    }
+
+    var entries = [];
+    log('2/5 Envoi des images (' + newImgs.size + ')…');
+    for (var pair of newImgs) {
+      var content = await blobToBase64(pair[1].blob);
+      var b = await gh(repoPath() + '/git/blobs', {method: 'POST', body: JSON.stringify({content: content, encoding: 'base64'})});
+      entries.push({path: pair[0], mode: '100644', type: 'blob', sha: b.sha});
+      log('   + ' + pair[0]);
+    }
+
+    log('3/5 Envoi des pages HTML…');
+    var pages = [[state.frPath, frNew, frNow], [state.enPath, enNew, enNow]];
+    for (var k = 0; k < pages.length; k++) {
+      if (pages[k][1] === pages[k][2]) continue;
+      var hb = await gh(repoPath() + '/git/blobs', {method: 'POST', body: JSON.stringify({content: pages[k][1], encoding: 'utf-8'})});
+      entries.push({path: pages[k][0], mode: '100644', type: 'blob', sha: hb.sha});
+      log('   ~ ' + pages[k][0]);
+    }
+
+    log('4/5 Création du commit « ' + message + ' »…');
+    var tree = await gh(repoPath() + '/git/trees', {method: 'POST', body: JSON.stringify({base_tree: baseTree, tree: entries})});
+    var commit = await gh(repoPath() + '/git/commits', {method: 'POST', body: JSON.stringify({message: message, tree: tree.sha, parents: [parent]})});
+
+    log('5/5 Push vers ' + state.branch + '…');
+    await gh(repoPath() + '/git/refs/heads/' + encodeURIComponent(state.branch), {method: 'PATCH', body: JSON.stringify({sha: commit.sha})});
+
+    state.slides.forEach(function(s){ [s.fr.image, s.en.image].forEach(function(im){ im.blob = null; }); });
+    state.dirty = false;
+    render();
+    log('✔ Terminé (' + commit.sha.slice(0, 7) + ').');
+    setStatus($('pushStatus'), "Publié avec succès ✔\nLe site sera à jour dans 1 à 2 minutes (GitHub Pages). Si tu vois encore l'ancienne version, fais Ctrl + F5 (ou vide le cache du navigateur).", 'ok');
+  } catch(err){
+    log('✘ ' + (err.message || err));
+    setStatus($('pushStatus'), explain(err), 'err');
+  } finally {
+    $('pushBtn').disabled = false;
+  }
+});
+
+loadSettings();
+
+})();
+</script>
+</body>
+</html>
